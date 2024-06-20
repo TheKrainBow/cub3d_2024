@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 00:43:31 by maagosti          #+#    #+#             */
-/*   Updated: 2024/05/08 01:07:41 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:27:40 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*gnl_strjoin(const char *s1, const char *s2)
 
 static int	gnl_strchr(const char *str, char c)
 {
-	int		pos;
+	int	pos;
 
 	pos = 0;
 	while (str[pos] && str[pos] != c)
@@ -86,9 +86,9 @@ static char	*ft_read(int fd, char *buffer, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char		buffer[100][BUFFER_SIZE + 1];
-	int				pos;
-	char			*line;
+	static char	buffer[100][BUFFER_SIZE + 1];
+	int			pos;
+	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd >= 100 || fd < 0)
 		return (NULL);

@@ -1,31 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   store_file.c                                       :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 01:06:05 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/20 18:28:01 by maagosti         ###   ########.fr       */
+/*   Created: 2024/06/14 16:48:57 by dferjul           #+#    #+#             */
+/*   Updated: 2024/06/20 18:28:18 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*store_file(int fd)
-{
-	char	buffer[11];
-	int		read_return;
-	char	*file_content;
-
-	file_content = NULL;
-	read_return = 1;
-	while (read_return)
-	{
-		read_return = read(fd, buffer, 10);
-		buffer[read_return] = 0;
-		ft_strjoin_to(&file_content, buffer);
-	}
-	close(fd);
-	return (file_content);
-}
+#include "../includes/cub3d.h"

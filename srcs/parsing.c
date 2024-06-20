@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:49:26 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/14 17:59:42 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:28:21 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,8 @@ int	line_error(char *line, char *error)
 
 int	is_map_token(char c)
 {
-	return (c == EMPTY
-		|| c == WALL
-		|| c == PLAYER_NORTH
-		|| c == PLAYER_SOUTH
-		|| c == PLAYER_EAST
-		|| c == PLAYER_WEST);
+	return (c == EMPTY || c == WALL || c == PLAYER_NORTH || c == PLAYER_SOUTH
+		|| c == PLAYER_EAST || c == PLAYER_WEST);
 }
 
 int	parse_map_line(t_data *data, char *line)
@@ -63,8 +59,8 @@ int	parse_map_line(t_data *data, char *line)
 	while (ft_iswhitespace(line[i]) || is_map_token(line[i]))
 		i++;
 	if (line[i])
-		return (ft_lstclear(&data->parsing.lst_map, &free),
-			line_error(line, UNEXPECTED_TOKEN));
+		return (ft_lstclear(&data->parsing.lst_map, &free), line_error(line,
+				UNEXPECTED_TOKEN));
 	ft_lstadd_back(&data->parsing.lst_map, ft_lstnew(ft_strdup(line)));
 	if (i > data->map_x)
 		data->map_x = i;
@@ -174,9 +170,7 @@ int	parse_line(t_data *data, char *line)
 
 int	is_player(int c)
 {
-	return (c == PLAYER_NORTH
-		|| c == PLAYER_SOUTH
-		|| c == PLAYER_EAST
+	return (c == PLAYER_NORTH || c == PLAYER_SOUTH || c == PLAYER_EAST
 		|| c == PLAYER_WEST);
 }
 
@@ -215,7 +209,6 @@ int	parse_map(t_data *data)
 			}
 		}
 	}
-
 	return (0);
 }
 
@@ -244,8 +237,8 @@ int	read_file(t_data *data, int fd)
 
 int	parse_file(t_data *data, char *file)
 {
-	int		size;
-	int		fd;
+	int	size;
+	int	fd;
 
 	data->parsing.is_map = 0;
 	size = ft_strlen(file);
