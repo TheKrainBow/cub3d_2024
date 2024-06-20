@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 00:43:31 by maagosti          #+#    #+#             */
-/*   Updated: 2024/05/11 17:47:23 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/05/08 01:07:41 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE <= 0 || fd >= 100 || fd < 0)
 		return (NULL);
 	line = ft_strdup(buffer[fd]);
+	pos = gnl_strchr(line, '\n');
+	if (pos != -1)
+		line[pos] = 0;
 	if (!line)
 		return (NULL);
 	if (buffer[fd][0] == '\0')
