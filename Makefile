@@ -1,5 +1,7 @@
 SRCS		=	main.c									\
 				parsing.c								\
+				input.c									\
+				raycasting.c							\
 
 ALL_SRCS		=	$(SRCS)
 
@@ -7,7 +9,7 @@ INCLUDES		=	-Iincludes								\
 					-Ilibft/includes					\
 					-Imlx
 
-LD_FLAGS		=	-Llibft -Lmlx -lbsd -lmlx -lXext -lX11 -lft -ltermcap -lreadline
+LD_FLAGS		=	-Llibft -Lmlx -lm -lbsd -lmlx -lXext -lX11 -lft -ltermcap -lreadline
 
 NAME			=	cub3d
 OBJS			=	$(addprefix srcs/, $(ALL_SRCS:.c=.o))

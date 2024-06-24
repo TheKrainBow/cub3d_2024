@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/20 18:27:37 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/24 04:32:18 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,16 @@
 # include "mlx.h"
 # include "mlx_int.h"
 # include <limits.h>
+# include <math.h>
 # include <stdio.h>
 # include <unistd.h>
 
+# define _USE_MATH_DEFINES
+
 # define KEY_ESC 65307
 # define ERROR 1
+# define VALID 0
+# define PI 3.14159265358979323846264338327950288
 
 # define WALL '1'
 # define EMPTY '0'
@@ -29,6 +34,10 @@
 # define PLAYER_EAST 'E'
 # define PLAYER_WEST 'W'
 
+# define WIN_X 850
+# define WIN_Y 480
+# define FOV 90
+
 # define WRONG_TOKEN "Invalid token"
 # define NOT_INT "Not a valid integer [0, 255]"
 # define MISSING_TOKEN "Missing token"
@@ -36,13 +45,14 @@
 # define NO_MAP "No map found in file"
 # define MULTIPLE_PLAYER "Map has more than one player"
 
-typedef enum e_texture
+typedef enum e_wall
 {
 	NORTH,
 	SOUTH,
 	EAST,
-	WEST
-}					t_texture;
+	WEST,
+	NONE
+}					t_wall;
 
 typedef struct s_color
 {
@@ -75,6 +85,25 @@ typedef struct s_textures
 	void			*west;
 }					t_textures;
 
+typedef struct s_ray
+{
+	double			x;
+	double			y;
+	double			dist;
+	double			angle;
+	double			dirx;
+	double			diry;
+	double			distx;
+	double			disty;
+	double			stepx;
+	double			stepy;
+	double			deltax;
+	double			deltay;
+	double			impactx;
+	double			impacty;
+	t_wall			wall_type;
+}					t_ray;
+
 typedef struct s_data
 {
 	char			**map;
@@ -91,8 +120,12 @@ typedef struct s_data
 	t_color			ceiling;
 	t_parsing		parsing;
 	t_textures		texture;
+	t_ray			*ray;
 }					t_data;
 
 int					parse_file(t_data *data, char *file);
+
+void				calculate_img(t_data *data);
+void	print_map(t_data *data);
 
 #endif

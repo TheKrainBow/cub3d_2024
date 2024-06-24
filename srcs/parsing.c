@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:49:26 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/20 18:28:21 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/24 04:38:58 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**ft_lsttotab(t_list *lst, int len)
 		dest[i] = ft_calloc(sizeof(char *), len + 1);
 		src_len = ft_strlen(lst->content);
 		ft_memcpy(dest[i], lst->content, src_len);
-		ft_memset(dest[i] + src_len, '1', len - src_len);
+		ft_memset(dest[i] + src_len, ' ', len - src_len);
 		lst = lst->next;
 		i++;
 	}
@@ -110,7 +110,7 @@ int	parse_color_line(t_data *data, char *line)
 	return (0);
 }
 
-int	parse_texture_line(t_data *data, char *line, t_texture type)
+int	parse_texture_line(t_data *data, char *line, t_wall type)
 {
 	int		i;
 	void	**texture;
@@ -176,16 +176,21 @@ int	is_player(int c)
 
 double	parse_rotation(int c)
 {
-	if (c == PLAYER_NORTH)
+	if (c == PLAYER_EAST)
 		return (0);
 	if (c == PLAYER_NORTH)
-		return (0.25);
-	if (c == PLAYER_NORTH)
-		return (0.5);
-	return (0.75);
+		return (270);
+	if (c == PLAYER_WEST)
+		return (180);
+	return (90);
 }
 
-int	parse_map(t_data *data)
+int	is_map_border(char c)
+{
+	return (ft_iswhitespace(c));
+}
+
+int	find_player(t_data *data)
 {
 	int	i;
 	int	j;
@@ -196,20 +201,67 @@ int	parse_map(t_data *data)
 		i = -1;
 		while (data->map[j][++i])
 		{
-			if (ft_iswhitespace(data->map[j][i]))
-				data->map[j][i] = '1';
 			if (is_player(data->map[j][i]))
 			{
 				if (data->parsing.has_player == 1)
-					return (line_error("Map", MULTIPLE_PLAYER));
+					return (line_error(data->map[j], MULTIPLE_PLAYER));
 				data->parsing.has_player = 1;
-				data->player.pos_x = i;
-				data->player.pos_y = j;
+				data->player.pos_x = i + 0.5;
+				data->player.pos_y = j + 0.5;
 				data->player.rotation = parse_rotation(data->map[j][i]);
+				data->map[j][i] = EMPTY;
 			}
 		}
 	}
-	return (0);
+	return (VALID);
+}
+
+int	check_closed_map(t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (data->map[++j])
+	{
+		i = -1;
+		while (data->map[j][++i])
+		{
+			if (data->map[j][i] == EMPTY)
+			{
+				if ((j == 0 || i == 0 || j == data->map_y || i == data->map_x))
+					return (line_error(data->map[j], "Map not closed"));
+				if (ft_iswhitespace(data->map[j - 1][i])
+					|| ft_iswhitespace(data->map[j + 1][i])
+					|| ft_iswhitespace(data->map[j][i - 1])
+					|| ft_iswhitespace(data->map[j][i + 1]))
+					return (line_error(data->map[j], "Map not closed"));
+			}
+		}
+	}
+	return (VALID);
+}
+
+int	parse_map(t_data *data)
+{
+	int	i;
+	int	j;
+
+	if (find_player(data) == ERROR)
+		return (ERROR);
+	if (check_closed_map(data) == ERROR)
+		return (ERROR);
+	j = -1;
+	while (data->map[++j])
+	{
+		i = -1;
+		while (data->map[j][++i])
+		{
+			if (ft_iswhitespace(data->map[j][i]))
+				data->map[j][i] = EMPTY;
+		}
+	}
+	return (VALID);
 }
 
 int	read_file(t_data *data, int fd)
