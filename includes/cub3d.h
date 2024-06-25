@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/24 04:32:18 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/25 01:25:22 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ typedef struct s_parsing
 	t_list			*lst_map;
 }					t_parsing;
 
-typedef struct s_textures
+typedef struct s_texture
 {
-	void			*north;
-	void			*south;
-	void			*east;
-	void			*west;
-}					t_textures;
+	void		*ptr;
+	t_color		*draw;
+	int			sizex;
+	int			sizey;
+}				t_texture;
 
 typedef struct s_ray
 {
@@ -101,6 +101,7 @@ typedef struct s_ray
 	double			deltay;
 	double			impactx;
 	double			impacty;
+	int				side;
 	t_wall			wall_type;
 }					t_ray;
 
@@ -119,13 +120,13 @@ typedef struct s_data
 	t_color			floor;
 	t_color			ceiling;
 	t_parsing		parsing;
-	t_textures		texture;
+	t_texture		texture[4];
 	t_ray			*ray;
 }					t_data;
 
 int					parse_file(t_data *data, char *file);
 
 void				calculate_img(t_data *data);
-void	print_map(t_data *data);
+void				print_map(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:44:35 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/24 04:41:23 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/25 02:04:33 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_ray	*new_ray(double x, double y, double angle)
 		ray->distx = (floor(x) + 1 - x) * ray->deltax;
 	else
 		ray->distx = (x - floor(x)) * ray->deltax;
-
 	if (ray->diry >= 0)
 		ray->disty = (floor(y) + 1 - y) * ray->deltay;
 	else
@@ -61,6 +60,7 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 			ray->x += ray->stepx;
 			ray->impactx = floor(ray->x) + (1 - ray->stepx) / 2;
 			ray->impacty = y + (ray->impactx - x) * ray->diry / ray->dirx;
+			ray->side = 0;
 		}
 		else
 		{
@@ -68,13 +68,14 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 			ray->y += ray->stepy;
 			ray->impacty = floor(ray->y) + (1 - ray->stepy) / 2;
 			ray->impactx = x + (ray->impacty - y) * ray->dirx / ray->diry;
+			ray->side = 1;
 		}
 	}
 	ray->dist = sqrt(pow(ray->impactx - x, 2) + pow(ray->impacty - y, 2));
 	return (ray);
 }
 
-t_color	color(int r, int g, int b)
+t_color	color(unsigned char r, unsigned char g, unsigned char b)
 {
 	t_color	dest;
 
@@ -93,12 +94,44 @@ void	draw_point(t_data *data, int x, int y, t_color color)
 	data->draw[WIN_X * y + x] = color;
 }
 
+t_color	get_texture_color(int y, int height, double angle, t_data *data)
+{
+	t_texture	*texture;
+	int			index;
+	double		x_ratio;
+
+	if (data->ray->side == 1)
+	{
+		x_ratio = data->ray->impactx - floor(data->ray->impactx);
+		if (angle > 180)
+			texture = &data->texture[NORTH];
+		else
+		{
+			x_ratio = 1 - x_ratio;
+			texture = &data->texture[SOUTH];
+		}
+	}
+	else
+	{
+		x_ratio = data->ray->impacty - floor(data->ray->impacty);
+		if (angle < 270 && angle > 90)
+		{
+			texture = &data->texture[EAST];
+			x_ratio = 1 - x_ratio;
+		}
+		else
+			texture = &data->texture[WEST];
+	}
+	index = ((int)((double)y / height * texture->sizey) * texture->sizex);
+	index += texture->sizex * fabs(x_ratio);
+	return (texture->draw[index]);
+}
+
 void	display_ray(int x, double angle, t_data *data)
 {
-	double	y;
-	double height;
+	int	y;
+	int	height;
 
-	(void)angle;
 	height = WIN_Y / data->ray->dist;
 	y = -1;
 	while (++y < WIN_Y)
@@ -108,8 +141,19 @@ void	display_ray(int x, double angle, t_data *data)
 		else if (y > height / 2 + WIN_Y / 2)
 			draw_point(data, x, y, data->floor);
 		else
-			draw_point(data, x, y, color(124, 56, 98));
+			draw_point(data, x, y,
+				get_texture_color(y - (-height / 2 + WIN_Y / 2),
+				height + 1, angle, data));
 	}
+}
+
+double	fix_angle(double angle)
+{
+	while (angle < 0)
+		angle += 360;
+	while (angle >= 360)
+		angle -= 360;
+	return (angle);
 }
 
 void	calculate_img(t_data *data)
@@ -122,8 +166,9 @@ void	calculate_img(t_data *data)
 	{
 		free(data->ray);
 		ray_angle = data->player.rotation - (FOV / 2) + (FOV * x / (WIN_X - 1));
-	
-		data->ray = raycast(data->player.pos_x, data->player.pos_y, ray_angle, data);
+		ray_angle = fix_angle(ray_angle);
+		data->ray = raycast(data->player.pos_x, data->player.pos_y,
+				ray_angle, data);
 		display_ray(x, ray_angle, data);
 	}
 }

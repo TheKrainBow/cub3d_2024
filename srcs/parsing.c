@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:49:26 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/24 04:38:58 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/25 01:28:09 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,7 @@ int	parse_texture_line(t_data *data, char *line, t_wall type)
 	int		i;
 	void	**texture;
 
-	if (type == NORTH)
-		texture = &data->texture.north;
-	else if (type == SOUTH)
-		texture = &data->texture.south;
-	else if (type == EAST)
-		texture = &data->texture.east;
-	else
-		texture = &data->texture.west;
+	texture = &data->texture[type].ptr;
 	i = 0;
 	while (ft_iswhitespace(line[i]))
 		i++;

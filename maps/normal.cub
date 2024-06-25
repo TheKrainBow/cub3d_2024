@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./texture/north.xpm
+SO ./texture/south.xpm
+WE ./texture/west.xpm
+EA ./texture/east.xpm
 
 C   225  ,   30 ,  0  
 F 220,100,0
@@ -17,6 +17,6 @@ F 220,100,0
 1000001
 1000001
 1000001
-100N001
+100E001
 1000001
 1111111

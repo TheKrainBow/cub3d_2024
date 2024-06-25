@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:13:22 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/24 03:52:36 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/25 02:01:13 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,63 @@ int	hook_keydown(int key_code, void *param)
 int	hook_loop(t_data *data)
 {
 	(void)data;
-	// calculate_img(data);
+	data->player.rotation += 2;
+	calculate_img(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (1);
 }
 
-void	start_mlx(t_data *data)
+int	free_data(t_data *data)
+{
+	ft_free_tab(data->map);
+	free(data->ray);
+	free(data);
+	return (ERROR);
+}
+
+int	open_texture(void *mlx, t_texture *texture)
+{
+	int		trash;
+	void	*tmp;
+
+	tmp = texture->ptr;
+	texture->ptr = mlx_xpm_file_to_image(mlx, tmp,
+			&texture->sizex, &texture->sizey);
+	if (!texture->ptr)
+	{
+		ft_putstr_fd("Error while openning texture ", 2);
+		ft_putstr_fd(tmp, 2);
+		free(tmp);
+		return (ERROR);
+	}
+	texture->draw = (t_color *)mlx_get_data_addr(texture->ptr, &trash, &trash, &trash);
+	free(tmp);
+	return (VALID);
+}
+
+int	open_textures(t_data *data)
+{
+	if (open_texture(data->mlx, &data->texture[NORTH]) == ERROR)
+		return (ERROR);
+	if (open_texture(data->mlx, &data->texture[SOUTH]) == ERROR)
+		return (ERROR);
+	if (open_texture(data->mlx, &data->texture[EAST]) == ERROR)
+		return (ERROR);
+	if (open_texture(data->mlx, &data->texture[WEST]) == ERROR)
+		return (ERROR);
+	return (VALID);
+}
+
+int	start_mlx(t_data *data)
 {
 	int	t;
 
 	data->mlx = mlx_init();
-	printf("%d\n", mlx_do_sync(data->mlx));
+	if (open_textures(data) == ERROR)
+	{
+		mlx_destroy_display(data->mlx);
+		return (ERROR);
+	}
 	data->win = mlx_new_window(data->mlx, WIN_X, WIN_Y, "Cub3D");
 	data->img = mlx_new_image(data->mlx, WIN_X, WIN_Y);
 	data->draw = (t_color *)mlx_get_data_addr(data->img, &t, &t, &t);
@@ -47,17 +94,7 @@ void	start_mlx(t_data *data)
 	mlx_hook(data->win, 2, 1L << 0, hook_keydown, data);
 	mlx_loop_hook(data->mlx, hook_loop, data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-}
-
-void	free_data(t_data *data)
-{
-	free(data->texture.north);
-	free(data->texture.south);
-	free(data->texture.east);
-	free(data->texture.west);
-	ft_free_tab(data->map);
-	free(data->ray);
-	free(data);
+	return (VALID);
 }
 
 void	init_data(t_data *data)
@@ -101,10 +138,7 @@ void	print_data(t_data *data)
 	printf(" -> x: %f\n", data->player.pos_x);
 	printf(" -> y: %f\n", data->player.pos_y);
 	printf(" -> rotation: %f\n\n", data->player.rotation);
-	printf("North: %s\n", (char *)(data->texture.north));
-	printf("South: %s\n", (char *)data->texture.south);
-	printf("East: %s\n", (char *)data->texture.east);
-	printf("West: %s\n\nMap:\n", (char *)data->texture.west);
+	printf("\n\nMap:\n");
 	print_map(data);
 }
 
@@ -120,14 +154,19 @@ int	main(int ac, char **av)
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data);
 	if (parse_file(data, av[1]) == ERROR)
-		return (free_data(data), ERROR);
-	start_mlx(data);
+		return (free_data(data));
+	if (start_mlx(data) == ERROR)
+		return (free_data(data));
 	calculate_img(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	print_data(data);
 	mlx_loop(data->mlx);
 	mlx_destroy_image(data->mlx, data->img);
 	mlx_destroy_image(data->mlx, data->img2);
+	mlx_destroy_image(data->mlx, data->texture[NORTH].ptr);
+	mlx_destroy_image(data->mlx, data->texture[SOUTH].ptr);
+	mlx_destroy_image(data->mlx, data->texture[WEST].ptr);
+	mlx_destroy_image(data->mlx, data->texture[EAST].ptr);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free_data(data);
