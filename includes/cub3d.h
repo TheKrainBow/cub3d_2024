@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/25 01:25:22 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:06:30 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,28 @@
 # define UNEXPECTED_TOKEN "Unexpected token"
 # define NO_MAP "No map found in file"
 # define MULTIPLE_PLAYER "Map has more than one player"
+
+typedef enum e_key_code
+{
+	A_KEY = 0,
+	S_KEY = 1,
+	D_KEY = 2,
+	W_KEY = 13,
+	CLOSE_ICON = 17,
+	ESC_KEY = 53,
+	KEY_RELEASE = 3,
+	LEFT_ARROW_KEY = 123,
+	RIGHT_ARROW_KEY = 124,
+	DOWN_ARROW_KEY = 125,
+	UP_ARROW_KEY = 126
+}			t_key_code;
+
+typedef enum e_map_char
+{
+	WALL_CHAR = '1',
+	PLAYER_CHAR = 'N',
+	VOID_CHAR = '0'
+}			t_map_char;
 
 typedef enum e_wall
 {
