@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:27:34 by dferjul           #+#    #+#             */
-/*   Updated: 2024/06/28 16:37:33 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/06/29 01:18:40 by krain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_move_up(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	move_step = 1.0;
+	move_step = 0.2;
 	new_x = data->player.pos_x + \
 		cos(data->player.rotation * PI / 180) * move_step;
 	new_y = data->player.pos_y + \
@@ -36,7 +36,7 @@ void	ft_move_down(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	move_step = 1.0;
+	move_step = 0.2;
 	new_x = data->player.pos_x - \
 		cos(data->player.rotation * PI / 180) * move_step;
 	new_y = data->player.pos_y - \
@@ -54,7 +54,7 @@ void	ft_move_left(t_data *data)
 	double	new_x;
 	double	new_y;
 
-	move_step = 1.0;
+	move_step = 0.2;
 	new_x = data->player.pos_x + \
 		sin(data->player.rotation * PI / 180) * move_step;
 	new_y = data->player.pos_y - \
@@ -72,7 +72,7 @@ void	ft_move_right(t_data *data)
 	double	new_y;
 	double	move_step;
 
-	move_step = 1.0;
+	move_step = 0.2;
 	new_x = data->player.pos_x - \
 		sin(data->player.rotation * PI / 180) * move_step;
 	new_y = data->player.pos_y + \
@@ -82,4 +82,16 @@ void	ft_move_right(t_data *data)
 		data->player.pos_x = new_x;
 		data->player.pos_y = new_y;
 	}
+}
+
+void	ft_turn_right(t_data *data)
+{
+	data->player.rotation += 5;
+	data->player.rotation = fix_angle(data->player.rotation);
+}
+
+void	ft_turn_left(t_data *data)
+{
+	data->player.rotation -= 5;
+	data->player.rotation = fix_angle(data->player.rotation);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/28 16:47:22 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/06/29 01:16:08 by krain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,9 @@ void				ft_move_up(t_data *data);
 void				ft_move_down(t_data *data);
 void				ft_move_left(t_data *data);
 void				ft_move_right(t_data *data);
+void				ft_turn_left(t_data *data);
+void				ft_turn_right(t_data *data);
+
+double				fix_angle(double angle);
 
 #endif
