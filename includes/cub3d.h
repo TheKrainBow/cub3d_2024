@@ -6,7 +6,7 @@
 /*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/27 20:06:30 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/06/28 16:47:22 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define VALID 0
 # define PI 3.14159265358979323846264338327950288
 
+# define MOVE_STEP '1.0'
 # define WALL '1'
 # define EMPTY '0'
 # define PLAYER_NORTH 'N'
@@ -60,13 +61,6 @@ typedef enum e_key_code
 	UP_ARROW_KEY = 126
 }			t_key_code;
 
-typedef enum e_map_char
-{
-	WALL_CHAR = '1',
-	PLAYER_CHAR = 'N',
-	VOID_CHAR = '0'
-}			t_map_char;
-
 typedef enum e_wall
 {
 	NORTH,
@@ -89,6 +83,7 @@ typedef struct s_player
 	double			pos_x;
 	double			pos_y;
 	double			rotation;
+	//double			move_step;
 	void			*texture;
 }					t_player;
 
@@ -150,5 +145,13 @@ int					parse_file(t_data *data, char *file);
 
 void				calculate_img(t_data *data);
 void				print_map(t_data *data);
+
+/*	input.c	*/
+int					key_press(int key_code, t_data *data);
+/*	move.c	*/
+void				ft_move_up(t_data *data);
+void				ft_move_down(t_data *data);
+void				ft_move_left(t_data *data);
+void				ft_move_right(t_data *data);
 
 #endif
