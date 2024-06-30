@@ -6,13 +6,13 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:13:22 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/27 22:30:49 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:55:44 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	hook_keydown(int key_code, void *param)
+/* int	hook_keydown(int key_code, void *param)
 {
 	t_data	*data;
 
@@ -23,11 +23,10 @@ int	hook_keydown(int key_code, void *param)
 		mlx_loop_end(data->mlx);
 	}
 	return (1);
-}
+} */
 
 int	hook_loop(t_data *data)
 {
-	data->player.rotation += 1;
 	calculate_img(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (1);
@@ -91,7 +90,7 @@ int	start_mlx(t_data *data)
 	data->img2 = mlx_new_image(data->mlx, WIN_X, WIN_Y);
 	data->draw2 = (t_color *)mlx_get_data_addr(data->img2, &t, &t, &t);
 	mlx_hook(data->win, 33, 1L << 17, mlx_loop_end, data->mlx);
-	mlx_hook(data->win, 2, 1L << 0, hook_keydown, data);
+	mlx_hook(data->win, 2, 1L << 0, key_press, data);
 	mlx_loop_hook(data->mlx, hook_loop, data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (VALID);

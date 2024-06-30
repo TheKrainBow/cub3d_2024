@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:49:26 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/25 01:28:09 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:48:48 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,14 @@ int	parse_map_line(t_data *data, char *line)
 
 int	parse_color(char *line, int *i, unsigned char *color)
 {
+	int tmp_color;
 	while (ft_iswhitespace(line[*i]))
 		(*i)++;
 	if (!ft_isdigit(line[*i]))
 		return (line_error(line, NOT_INT));
 	*color = ft_atoi(line + *i);
-	if (*color > 255)
+	tmp_color = *color;
+	if (tmp_color > 255)
 		return (line_error(line, NOT_INT));
 	while (ft_isdigit(line[*i]) || ft_iswhitespace(line[*i]))
 		(*i)++;

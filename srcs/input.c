@@ -3,11 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:48:57 by dferjul           #+#    #+#             */
-/*   Updated: 2024/06/20 18:28:18 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/29 01:17:06 by krain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int	key_press(int key_code, t_data *data)
+{
+	if (key_code == KEY_ESC)
+	{
+		ft_putstr("ESC pressed\nExiting\n");
+		mlx_loop_end(data->mlx);
+	}
+	printf("%d\n", key_code);
+	if (key_code == W_KEY || key_code == 119)
+		ft_move_up(data);
+	if (key_code == S_KEY || key_code == 115)
+		ft_move_down(data);
+	if (key_code == A_KEY || key_code == 97)
+		ft_move_left(data);
+	if (key_code == D_KEY || key_code == 100)
+		ft_move_right(data);
+	if (key_code == 65361)
+		ft_turn_left(data);
+	if (key_code == 65363)
+		ft_turn_right(data);
+	print_map(data);
+	return (EXIT_SUCCESS);
+}

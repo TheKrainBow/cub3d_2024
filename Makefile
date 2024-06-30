@@ -2,6 +2,7 @@ SRCS		=	main.c									\
 				parsing.c								\
 				input.c									\
 				raycasting.c							\
+				move.c									\
 
 ALL_SRCS		=	$(SRCS)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/25 01:25:22 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/29 01:16:08 by krain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define VALID 0
 # define PI 3.14159265358979323846264338327950288
 
+# define MOVE_STEP '1.0'
 # define WALL '1'
 # define EMPTY '0'
 # define PLAYER_NORTH 'N'
@@ -44,6 +45,21 @@
 # define UNEXPECTED_TOKEN "Unexpected token"
 # define NO_MAP "No map found in file"
 # define MULTIPLE_PLAYER "Map has more than one player"
+
+typedef enum e_key_code
+{
+	A_KEY = 0,
+	S_KEY = 1,
+	D_KEY = 2,
+	W_KEY = 13,
+	CLOSE_ICON = 17,
+	ESC_KEY = 53,
+	KEY_RELEASE = 3,
+	LEFT_ARROW_KEY = 123,
+	RIGHT_ARROW_KEY = 124,
+	DOWN_ARROW_KEY = 125,
+	UP_ARROW_KEY = 126
+}			t_key_code;
 
 typedef enum e_wall
 {
@@ -67,6 +83,7 @@ typedef struct s_player
 	double			pos_x;
 	double			pos_y;
 	double			rotation;
+	//double			move_step;
 	void			*texture;
 }					t_player;
 
@@ -128,5 +145,17 @@ int					parse_file(t_data *data, char *file);
 
 void				calculate_img(t_data *data);
 void				print_map(t_data *data);
+
+/*	input.c	*/
+int					key_press(int key_code, t_data *data);
+/*	move.c	*/
+void				ft_move_up(t_data *data);
+void				ft_move_down(t_data *data);
+void				ft_move_left(t_data *data);
+void				ft_move_right(t_data *data);
+void				ft_turn_left(t_data *data);
+void				ft_turn_right(t_data *data);
+
+double				fix_angle(double angle);
 
 #endif
