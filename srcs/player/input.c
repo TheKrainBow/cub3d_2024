@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:48:57 by dferjul           #+#    #+#             */
-/*   Updated: 2024/06/29 01:17:06 by krain            ###   ########.fr       */
+/*   Updated: 2024/06/30 17:05:06 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,17 @@ int	key_press(int key_code, t_data *data)
 		ft_putstr("ESC pressed\nExiting\n");
 		mlx_loop_end(data->mlx);
 	}
-	printf("%d\n", key_code);
-	if (key_code == W_KEY || key_code == 119)
+	if (key_code == W_KEY || key_code == Z_KEY)
 		ft_move_up(data);
-	if (key_code == S_KEY || key_code == 115)
+	if (key_code == S_KEY)
 		ft_move_down(data);
-	if (key_code == A_KEY || key_code == 97)
+	if (key_code == A_KEY || key_code == Q_KEY)
 		ft_move_left(data);
-	if (key_code == D_KEY || key_code == 100)
+	if (key_code == D_KEY)
 		ft_move_right(data);
 	if (key_code == 65361)
 		ft_turn_left(data);
 	if (key_code == 65363)
 		ft_turn_right(data);
-	print_map(data);
 	return (EXIT_SUCCESS);
 }

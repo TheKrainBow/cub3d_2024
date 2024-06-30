@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:44:35 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/27 22:33:02 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/30 18:36:25 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 {
 	t_ray	*ray;
 
+	if (x < 0 || x >= data->map_x || y < 0 || y >= data->map_y)
+		return (NULL);
 	ray = new_ray(x, y, angle);
 	while (data->map[(int)ray->y][(int)ray->x] == EMPTY)
 	{
@@ -68,70 +70,6 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 	}
 	ray->dist = sqrt(pow(ray->impactx - x, 2) + pow(ray->impacty - y, 2));
 	return (ray);
-}
-
-t_color	color(unsigned char r, unsigned char g, unsigned char b)
-{
-	t_color	dest;
-
-	dest.r = r;
-	dest.g = g;
-	dest.b = b;
-	dest.a = 1;
-	return (dest);
-}
-
-void	draw_point(t_data *data, int x, int y, t_color color)
-{
-	if (y < 0 || x < 0 || y >= WIN_Y
-		|| x >= WIN_X)
-		return ;
-	data->draw[WIN_X * y + x] = color;
-}
-
-t_color	get_texture_color(int y, int height, double angle, t_data *data)
-{
-	t_texture	*texture;
-	int			index;
-	double		x_ratio;
-
-	if (data->ray->side == 1)
-	{
-		x_ratio = data->ray->impactx - floor(data->ray->impactx);
-		texture = &data->texture[(angle <= 180)];
-		if (angle <= 180)
-			x_ratio = 1 - x_ratio;
-	}
-	else
-	{
-		x_ratio = data->ray->impacty - floor(data->ray->impacty);
-		texture = &data->texture[2 + !(angle < 270 && angle > 90)];
-		if (angle < 270 && angle > 90)
-			x_ratio = 1 - x_ratio;
-	}
-	index = (floor((double)y / height * texture->sizey) * texture->sizex);
-	index += texture->sizex * fabs(x_ratio);
-	return (texture->draw[index]);
-}
-
-void	display_ray(int x, double angle, t_data *data)
-{
-	int	y;
-	int	height;
-
-	height = WIN_Y / data->ray->dist;
-	y = -1;
-	while (++y < WIN_Y)
-	{
-		if (y < -height / 2 + WIN_Y / 2)
-			draw_point(data, x, y, data->ceiling);
-		else if (y > height / 2 + WIN_Y / 2)
-			draw_point(data, x, y, data->floor);
-		else
-			draw_point(data, x, y,
-				get_texture_color(y - (-height / 2 + WIN_Y / 2),
-					height + 1, angle, data));
-	}
 }
 
 double	fix_angle(double angle)

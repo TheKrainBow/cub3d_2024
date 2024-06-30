@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/29 01:16:08 by krain            ###   ########.fr       */
+/*   Updated: 2024/06/30 18:18:05 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@
 
 typedef enum e_key_code
 {
-	A_KEY = 0,
-	S_KEY = 1,
-	D_KEY = 2,
-	W_KEY = 13,
+	A_KEY = 113,
+	Q_KEY = 97,
+	S_KEY = 115,
+	D_KEY = 100,
+	Z_KEY = 119,
+	W_KEY = 122,
 	CLOSE_ICON = 17,
 	ESC_KEY = 53,
 	KEY_RELEASE = 3,
@@ -156,6 +158,25 @@ void				ft_move_right(t_data *data);
 void				ft_turn_left(t_data *data);
 void				ft_turn_right(t_data *data);
 
+int					line_error(char *line, char *error);
+int					find_player(t_data *data);
+int					parse_map_line(t_data *data, char *line);
+int					parse_map(t_data *data);
+int					is_map_token(char c);
+int					parse_color_line(t_data *data, char *line);
+int					parse_texture_line(t_data *data, char *line, t_wall type);
+double				deg_to_rad(double angle);
+double				parse_rotation(int c);
+int					is_player(int c);
+int					find_player(t_data *data);
+void				draw_point(t_data *data, int x, int y, t_color color);
+void				display_ray(int x, double angle, t_data *data);
+
+/* mlx.c */
+
 double				fix_angle(double angle);
+
+void				mlx_destroy(t_data *data);
+int					start_mlx(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krain <krain@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:27:34 by dferjul           #+#    #+#             */
-/*   Updated: 2024/06/29 01:18:40 by krain            ###   ########.fr       */
+/*   Updated: 2024/06/30 18:42:06 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,4 @@ void	ft_move_right(t_data *data)
 		data->player.pos_x = new_x;
 		data->player.pos_y = new_y;
 	}
-}
-
-void	ft_turn_right(t_data *data)
-{
-	data->player.rotation += 5;
-	data->player.rotation = fix_angle(data->player.rotation);
-}
-
-void	ft_turn_left(t_data *data)
-{
-	data->player.rotation -= 5;
-	data->player.rotation = fix_angle(data->player.rotation);
 }

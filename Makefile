@@ -1,8 +1,15 @@
 SRCS		=	main.c									\
-				parsing.c								\
-				input.c									\
-				raycasting.c							\
-				move.c									\
+				mlx.c									\
+				parsing/color.c							\
+				parsing/map.c							\
+				parsing/parsing.c						\
+				parsing/player.c						\
+				parsing/texture.c						\
+				player/input.c							\
+				player/move.c							\
+				player/turn.c							\
+				raycasting/draw.c						\
+				raycasting/raycasting.c					\
 
 ALL_SRCS		=	$(SRCS)
 
