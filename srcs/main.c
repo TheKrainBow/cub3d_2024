@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:13:22 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/25 02:01:13 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/06/27 22:30:49 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	hook_keydown(int key_code, void *param)
 
 int	hook_loop(t_data *data)
 {
-	(void)data;
-	data->player.rotation += 2;
+	data->player.rotation += 1;
 	calculate_img(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (1);
@@ -57,7 +56,8 @@ int	open_texture(void *mlx, t_texture *texture)
 		free(tmp);
 		return (ERROR);
 	}
-	texture->draw = (t_color *)mlx_get_data_addr(texture->ptr, &trash, &trash, &trash);
+	texture->draw = (t_color *)mlx_get_data_addr(texture->ptr,
+			&trash, &trash, &trash);
 	free(tmp);
 	return (VALID);
 }
@@ -142,6 +142,18 @@ void	print_data(t_data *data)
 	print_map(data);
 }
 
+void	mlx_destroy(t_data *data)
+{
+	mlx_destroy_image(data->mlx, data->img);
+	mlx_destroy_image(data->mlx, data->img2);
+	mlx_destroy_image(data->mlx, data->texture[NORTH].ptr);
+	mlx_destroy_image(data->mlx, data->texture[SOUTH].ptr);
+	mlx_destroy_image(data->mlx, data->texture[WEST].ptr);
+	mlx_destroy_image(data->mlx, data->texture[EAST].ptr);
+	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -161,13 +173,7 @@ int	main(int ac, char **av)
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	print_data(data);
 	mlx_loop(data->mlx);
-	mlx_destroy_image(data->mlx, data->img);
-	mlx_destroy_image(data->mlx, data->img2);
-	mlx_destroy_image(data->mlx, data->texture[NORTH].ptr);
-	mlx_destroy_image(data->mlx, data->texture[SOUTH].ptr);
-	mlx_destroy_image(data->mlx, data->texture[WEST].ptr);
-	mlx_destroy_image(data->mlx, data->texture[EAST].ptr);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
+	mlx_destroy(data);
 	free_data(data);
+	exit(0);
 }

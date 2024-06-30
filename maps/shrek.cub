@@ -1,7 +1,7 @@
-NO ./texture/north.xpm
-SO ./texture/south.xpm
-WE ./texture/west.xpm
-EA ./texture/east.xpm
+NO ./texture/shrek/shrek1.xpm
+SO ./texture/shrek/shrek2.xpm
+WE ./texture/shrek/shrek3.xpm
+EA ./texture/shrek/shrek4.xpm
 
 C   225  ,   30 ,  0  
 F 220,100,0
@@ -17,6 +17,6 @@ F 220,100,0
 1000001
 1000001
 1000001
-100S001
+100N001
 1000001
 1111111
