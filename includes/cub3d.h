@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/30 18:18:05 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/12 01:19:26 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,22 @@
 # define PLAYER_EAST 'E'
 # define PLAYER_WEST 'W'
 
-# define WIN_X 850
-# define WIN_Y 480
+# define WIN_X 1000
+# define WIN_Y 580
+//# define WIN_X 850
+//# define WIN_Y 480
 # define FOV 90
 
 # define WRONG_TOKEN "Invalid token"
 # define NOT_INT "Not a valid integer [0, 255]"
 # define MISSING_TOKEN "Missing token"
+# define MISSING_COLOR "Missing a color"
 # define UNEXPECTED_TOKEN "Unexpected token"
 # define NO_MAP "No map found in file"
 # define MULTIPLE_PLAYER "Map has more than one player"
+# define FLOOR_DEFINED "Floor color is already defined"
+# define CEILING_DEFINED "Ceiling color is already defined"
+# define TEXTURE_DEFINED "Texture is already defined"
 
 typedef enum e_key_code
 {
@@ -85,7 +91,6 @@ typedef struct s_player
 	double			pos_x;
 	double			pos_y;
 	double			rotation;
-	//double			move_step;
 	void			*texture;
 }					t_player;
 
@@ -99,6 +104,7 @@ typedef struct s_parsing
 typedef struct s_texture
 {
 	void		*ptr;
+	char		*path;
 	t_color		*draw;
 	int			sizex;
 	int			sizey;
@@ -124,6 +130,16 @@ typedef struct s_ray
 	t_wall			wall_type;
 }					t_ray;
 
+typedef struct s_input
+{
+	int				forward;
+	int				backward;
+	int				left;
+	int				right;
+	int				rot_left;
+	int				rot_right;
+}				t_input;
+
 typedef struct s_data
 {
 	char			**map;
@@ -136,11 +152,14 @@ typedef struct s_data
 	void			*img2;
 	t_color			*draw2;
 	t_player		player;
+	int				has_floor;
 	t_color			floor;
+	int				has_ceiling;
 	t_color			ceiling;
 	t_parsing		parsing;
 	t_texture		texture[4];
 	t_ray			*ray;
+	t_input			inputs;
 }					t_data;
 
 int					parse_file(t_data *data, char *file);
@@ -150,6 +169,7 @@ void				print_map(t_data *data);
 
 /*	input.c	*/
 int					key_press(int key_code, t_data *data);
+int					key_up(int key_code, t_data *data);
 /*	move.c	*/
 void				ft_move_up(t_data *data);
 void				ft_move_down(t_data *data);
@@ -178,5 +198,6 @@ double				fix_angle(double angle);
 
 void				mlx_destroy(t_data *data);
 int					start_mlx(t_data *data);
+char				*texture_to_str(t_wall texture);
 
 #endif

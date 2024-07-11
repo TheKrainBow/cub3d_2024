@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:49:26 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/30 17:29:20 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/12 00:40:09 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	read_file(t_data *data, int fd)
 	ft_lstclear(&data->parsing.lst_map, &free);
 	if (parse_map(data) == ERROR)
 		return (ERROR);
+	if (data->has_ceiling == 0 || data->has_floor == 0)
+		return (line_error("EOF", MISSING_COLOR));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:44:35 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/30 18:36:25 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/12 01:24:38 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 	ray = new_ray(x, y, angle);
 	while (data->map[(int)ray->y][(int)ray->x] == EMPTY)
 	{
+		ray->side = !(ray->distx < ray->disty);
 		if (ray->distx < ray->disty)
 		{
 			ray->distx += ray->deltax;
 			ray->x += ray->stepx;
 			ray->impactx = floor(ray->x) + (1 - ray->stepx) / 2;
 			ray->impacty = y + (ray->impactx - x) * ray->diry / ray->dirx;
-			ray->side = 0;
 		}
 		else
 		{
@@ -65,7 +65,6 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 			ray->y += ray->stepy;
 			ray->impacty = floor(ray->y) + (1 - ray->stepy) / 2;
 			ray->impactx = x + (ray->impacty - y) * ray->dirx / ray->diry;
-			ray->side = 1;
 		}
 	}
 	ray->dist = sqrt(pow(ray->impactx - x, 2) + pow(ray->impacty - y, 2));

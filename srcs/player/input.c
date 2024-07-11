@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:48:57 by dferjul           #+#    #+#             */
-/*   Updated: 2024/06/30 17:05:06 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/11 23:03:15 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,33 @@ int	key_press(int key_code, t_data *data)
 		mlx_loop_end(data->mlx);
 	}
 	if (key_code == W_KEY || key_code == Z_KEY)
-		ft_move_up(data);
+		data->inputs.forward = 1;
 	if (key_code == S_KEY)
-		ft_move_down(data);
+		data->inputs.backward = 1;
 	if (key_code == A_KEY || key_code == Q_KEY)
-		ft_move_left(data);
+		data->inputs.left = 1;
 	if (key_code == D_KEY)
-		ft_move_right(data);
+		data->inputs.right = 1;
 	if (key_code == 65361)
-		ft_turn_left(data);
+		data->inputs.rot_left = 1;
 	if (key_code == 65363)
-		ft_turn_right(data);
+		data->inputs.rot_right = 1;
+	return (EXIT_SUCCESS);
+}
+
+int	key_up(int key_code, t_data *data)
+{
+	if (key_code == W_KEY || key_code == Z_KEY)
+		data->inputs.forward = 0;
+	if (key_code == S_KEY)
+		data->inputs.backward = 0;
+	if (key_code == A_KEY || key_code == Q_KEY)
+		data->inputs.left = 0;
+	if (key_code == D_KEY)
+		data->inputs.right = 0;
+	if (key_code == 65361)
+		data->inputs.rot_left = 0;
+	if (key_code == 65363)
+		data->inputs.rot_right = 0;
 	return (EXIT_SUCCESS);
 }

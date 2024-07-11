@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:13:22 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/30 18:07:43 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/12 01:23:53 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 int	free_data(t_data *data)
 {
 	ft_free_tab(data->map);
+	free(data->texture[NORTH].path);
+	free(data->texture[SOUTH].path);
+	free(data->texture[EAST].path);
+	free(data->texture[WEST].path);
 	free(data->ray);
 	free(data);
 	return (ERROR);
@@ -55,7 +59,11 @@ int	main(int ac, char **av)
 	if (parse_file(data, av[1]) == ERROR)
 		return (free_data(data));
 	if (start_mlx(data) == ERROR)
-		return (free_data(data));
+	{
+		mlx_destroy(data);
+		free_data(data);
+		return (0);
+	}
 	calculate_img(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_loop(data->mlx);

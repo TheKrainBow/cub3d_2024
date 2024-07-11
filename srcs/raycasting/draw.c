@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:09:54 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/30 18:41:47 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/12 01:20:18 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_color	color(unsigned char r, unsigned char g, unsigned char b)
 	return (dest);
 }
 
-t_color	get_texture_color(int y, int height, double angle, t_data *data)
+t_color	get_texture_color(int y, double height, double angle, t_data *data)
 {
 	t_texture	*texture;
 	int			index;
@@ -50,12 +50,13 @@ t_color	get_texture_color(int y, int height, double angle, t_data *data)
 
 void	display_ray(int x, double angle, t_data *data)
 {
-	int	y;
-	int	height;
-	double	correctedDist;
+	int		y;
+	int		height;
+	double	dist;
 
-	correctedDist = data->ray->dist * cos(deg_to_rad(fix_angle(angle)) - deg_to_rad(fix_angle(data->player.rotation)));
-	height = WIN_Y / correctedDist;
+	dist = data->ray->dist * cos(deg_to_rad(fix_angle(angle))
+			- deg_to_rad(fix_angle(data->player.rotation)));
+	height = WIN_Y / dist;
 	y = -1;
 	while (++y < WIN_Y)
 	{
@@ -66,7 +67,7 @@ void	display_ray(int x, double angle, t_data *data)
 		else
 			draw_point(data, x, y,
 				get_texture_color(y - (-height / 2 + WIN_Y / 2),
-					height + 1, angle, data));
+					height, angle, data));
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:28:32 by maagosti          #+#    #+#             */
-/*   Updated: 2024/06/30 17:29:24 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/12 00:38:13 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	parse_texture_line(t_data *data, char *line, t_wall type)
 {
 	int		i;
-	void	**texture;
+	char	**texture;
 
-	texture = &data->texture[type].ptr;
+	if (data->texture[type].path)
+		return (line_error(line, TEXTURE_DEFINED));
+	texture = &data->texture[type].path;
 	i = 0;
 	while (ft_iswhitespace(line[i]))
 		i++;
@@ -32,4 +34,17 @@ int	parse_texture_line(t_data *data, char *line, t_wall type)
 	if (line[i])
 		return (line_error(line, UNEXPECTED_TOKEN));
 	return (0);
+}
+
+char	*texture_to_str(t_wall texture)
+{
+	if (texture == NORTH)
+		return ("north texture");
+	if (texture == SOUTH)
+		return ("south texture");
+	if (texture == EAST)
+		return ("east texture");
+	if (texture == WEST)
+		return ("west texture");
+	return ("");
 }
