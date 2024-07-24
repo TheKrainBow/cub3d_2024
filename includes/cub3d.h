@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/12 01:19:26 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:28:41 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 //# define WIN_X 850
 //# define WIN_Y 480
 # define FOV 90
+# define MAP_SCALE 15
 
 # define WRONG_TOKEN "Invalid token"
 # define NOT_INT "Not a valid integer [0, 255]"
@@ -78,6 +79,12 @@ typedef enum e_wall
 	NONE
 }					t_wall;
 
+typedef struct s_point
+{
+	int				x;
+	int				y;
+}				t_point;
+
 typedef struct s_color
 {
 	unsigned char	b;
@@ -91,6 +98,7 @@ typedef struct s_player
 	double			pos_x;
 	double			pos_y;
 	double			rotation;
+	double			offset;
 	void			*texture;
 }					t_player;
 
@@ -138,6 +146,10 @@ typedef struct s_input
 	int				right;
 	int				rot_left;
 	int				rot_right;
+	int				rot_up;
+	int				rot_down;
+	int				allow_mouse;
+	int				has_map;
 }				t_input;
 
 typedef struct s_data
@@ -146,6 +158,9 @@ typedef struct s_data
 	int				map_x;
 	int				map_y;
 	void			*mlx;
+	void			*win_map;
+	void			*img_map;
+	t_color			*draw_map;
 	void			*win;
 	void			*img;
 	t_color			*draw;
@@ -170,13 +185,12 @@ void				print_map(t_data *data);
 /*	input.c	*/
 int					key_press(int key_code, t_data *data);
 int					key_up(int key_code, t_data *data);
+int					mouse_hook(int x, int y, t_data *data);
 /*	move.c	*/
 void				ft_move_up(t_data *data);
 void				ft_move_down(t_data *data);
 void				ft_move_left(t_data *data);
 void				ft_move_right(t_data *data);
-void				ft_turn_left(t_data *data);
-void				ft_turn_right(t_data *data);
 
 int					line_error(char *line, char *error);
 int					find_player(t_data *data);
@@ -190,8 +204,16 @@ double				parse_rotation(int c);
 int					is_player(int c);
 int					find_player(t_data *data);
 void				draw_point(t_data *data, int x, int y, t_color color);
+void				draw_map(t_data *data);
+void				draw_map_point(t_data *data, int x, int y, t_color color);
 void				display_ray(int x, double angle, t_data *data);
-
+t_point				point(int x, int y);
+t_color				color(unsigned char r, unsigned char g, unsigned char b);
+/*	turn.c	*/
+void				ft_turn_left(t_data *data);
+void				ft_turn_right(t_data *data);
+void				ft_turn_down(t_data *data);
+void				ft_turn_up(t_data *data);
 /* mlx.c */
 
 double				fix_angle(double angle);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:44:35 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/12 01:24:38 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:47:55 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,34 @@ double	fix_angle(double angle)
 	return (angle);
 }
 
+
+int		ft_abs(int x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
+
+void	draw_line(t_data *data, t_point a, t_point b, t_color color)
+{
+	int			i;
+	t_point		d;
+	double		steps;
+
+	d.x = b.x - a.x;
+	d.y = b.y - a.y;
+	steps = ft_max(ft_abs(d.x), ft_abs(d.y));
+	d.x /= steps;
+	d.y /= steps;
+	i = -1;
+	while (++i <= steps)
+	{
+		draw_point(data, a.x, a.y, color);
+		a.x = a.x + d.x;
+		a.y = a.y + d.y;
+	}
+}
+
 void	calculate_img(t_data *data)
 {
 	double	x;
@@ -95,4 +123,9 @@ void	calculate_img(t_data *data)
 				ray_angle, data);
 		display_ray(x, ray_angle, data);
 	}
+	draw_line(data, point(WIN_X / 2, WIN_Y / 2 - 5), point(WIN_X / 2, WIN_Y / 2 - 10), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2, WIN_Y / 2 + 5), point(WIN_X / 2, WIN_Y / 2 + 10), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2 - 5, WIN_Y / 2), point(WIN_X / 2 - 10, WIN_Y / 2), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2 + 5, WIN_Y / 2), point(WIN_X / 2 + 10, WIN_Y / 2), color(0, 255, 0));
+	draw_point(data, WIN_X / 2, WIN_Y / 2, color(255, 0, 0));
 }
