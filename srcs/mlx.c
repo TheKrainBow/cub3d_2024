@@ -6,7 +6,7 @@
 /*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 18:03:06 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/24 18:33:10 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/07/26 02:44:08 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	hook_loop(t_data *data)
 		ft_turn_down(data);
 	calculate_img(data);
 	if (data->inputs.allow_mouse)
-		mlx_mouse_move(data->mlx, data->win, WIN_X / 2, WIN_Y /2);
+		mlx_mouse_move(data->mlx, data->win, WIN_X / 2, WIN_Y / 2);
 	if (data->inputs.has_map)
 		draw_map(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);

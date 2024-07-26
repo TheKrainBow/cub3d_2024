@@ -6,36 +6,24 @@
 /*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:48:57 by dferjul           #+#    #+#             */
-/*   Updated: 2024/07/24 18:37:42 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/07/26 02:50:00 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	toggle_mouse(t_data *data)
-{
-	if (data->inputs.allow_mouse == 1)
-	{
-		data->inputs.allow_mouse = 0;
-		mlx_mouse_show(data->mlx, data->win);
-	}
-	else
-	{
-		data->inputs.allow_mouse = 1;
-		mlx_mouse_hide(data->mlx, data->win);
-	}
-}
-
-
 int	toggle_map(t_data *data)
 {
-	int t;
+	int	t;
 
 	if (!data->inputs.has_map)
 	{
-		data->win_map = mlx_new_window(data->mlx, data->map_x * MAP_SCALE, data->map_y * MAP_SCALE, "Minimap");
-		data->img_map = mlx_new_image(data->mlx, data->map_x * MAP_SCALE, data->map_y * MAP_SCALE);
-		data->draw_map = (t_color *)mlx_get_data_addr(data->img_map, &t, &t, &t);
+		data->win_map = mlx_new_window(data->mlx, data->map_x * MAP_SCALE,
+				| data->map_y * MAP_SCALE, "Minimap");
+		data->img_map = mlx_new_image(data->mlx, data->map_x * MAP_SCALE,
+				| data->map_y * MAP_SCALE);
+		data->draw_map = (t_color *)mlx_get_data_addr(data->img_map,
+				| &t, &t, &t);
 		mlx_hook(data->win_map, 33, 1L << 17, toggle_map, data);
 		mlx_hook(data->win_map, 2, 1L << 0, key_press, data);
 		mlx_hook(data->win_map, 3, 1L << 1, key_up, data);
@@ -68,6 +56,16 @@ int	key_press(int key_code, t_data *data)
 		data->inputs.left = 1;
 	if (key_code == D_KEY)
 		data->inputs.right = 1;
+	return (EXIT_SUCCESS);
+}
+
+int	key_press_bonus(int key_code, t_data *data)
+{
+	if (key_code == KEY_ESC)
+	{
+		ft_putstr("ESC pressed\nExiting\n");
+		mlx_loop_end(data->mlx);
+	}
 	if (key_code == 65361)
 		data->inputs.rot_left = 1;
 	if (key_code == 65363)
@@ -102,14 +100,4 @@ int	key_up(int key_code, t_data *data)
 	if (key_code == 65364)
 		data->inputs.rot_down = 0;
 	return (EXIT_SUCCESS);
-}
-
-int	mouse_hook(int x, int y, t_data *data)
-{
-	if (!data->inputs.allow_mouse)
-		return (0);
-	data->player.offset += (WIN_Y / 2 - y) / ((double)WIN_Y / WIN_X) / 20;
-	data->player.rotation -= (WIN_X / 2 - x) / ((double)WIN_X / WIN_Y) / 50;
-	data->player.rotation = (data->player.rotation);
-	return (0);
 }

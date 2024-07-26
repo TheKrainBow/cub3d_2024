@@ -6,7 +6,7 @@
 /*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/24 18:28:41 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/07/26 02:50:44 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void				print_map(t_data *data);
 int					key_press(int key_code, t_data *data);
 int					key_up(int key_code, t_data *data);
 int					mouse_hook(int x, int y, t_data *data);
+int					key_press_bonus(int key_code, t_data *data);
 /*	move.c	*/
 void				ft_move_up(t_data *data);
 void				ft_move_down(t_data *data);
