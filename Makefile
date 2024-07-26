@@ -8,16 +8,18 @@ SRCS		=	main.c									\
 				player/input.c							\
 				player/move.c							\
 				player/turn.c							\
+				player/mouse.c							\
 				raycasting/draw.c						\
+				raycasting/draw_utils.c					\
 				raycasting/raycasting.c					\
 
 ALL_SRCS		=	$(SRCS)
 
-INCLUDES		=	-Iincludes								\
+INCLUDES		=	-Iincludes							\
 					-Ilibft/includes					\
 					-Imlx
 
-LD_FLAGS		=	-Llibft -Lmlx -lm -lbsd -lmlx -lXext -lX11 -lft -ltermcap -lreadline
+LD_FLAGS		=	-Llibft -Lmlx -lm -lbsd -lmlx -lXext -lX11 -lft -ltermcap -lreadline -O2
 
 NAME			=	cub3d
 OBJS			=	$(addprefix srcs/, $(ALL_SRCS:.c=.o))

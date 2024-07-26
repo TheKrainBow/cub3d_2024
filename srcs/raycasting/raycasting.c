@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:44:35 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/24 17:47:55 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:06:08 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,6 @@ t_ray	*raycast(double x, double y, double angle, t_data *data)
 	return (ray);
 }
 
-double	fix_angle(double angle)
-{
-	while (angle < 0)
-		angle += 360;
-	while (angle >= 360)
-		angle -= 360;
-	return (angle);
-}
-
-
-int		ft_abs(int x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
 void	draw_line(t_data *data, t_point a, t_point b, t_color color)
 {
 	int			i;
@@ -123,9 +106,13 @@ void	calculate_img(t_data *data)
 				ray_angle, data);
 		display_ray(x, ray_angle, data);
 	}
-	draw_line(data, point(WIN_X / 2, WIN_Y / 2 - 5), point(WIN_X / 2, WIN_Y / 2 - 10), color(0, 255, 0));
-	draw_line(data, point(WIN_X / 2, WIN_Y / 2 + 5), point(WIN_X / 2, WIN_Y / 2 + 10), color(0, 255, 0));
-	draw_line(data, point(WIN_X / 2 - 5, WIN_Y / 2), point(WIN_X / 2 - 10, WIN_Y / 2), color(0, 255, 0));
-	draw_line(data, point(WIN_X / 2 + 5, WIN_Y / 2), point(WIN_X / 2 + 10, WIN_Y / 2), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2, WIN_Y / 2 - 5),
+		point(WIN_X / 2, WIN_Y / 2 - 10), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2, WIN_Y / 2 + 5),
+		point(WIN_X / 2, WIN_Y / 2 + 10), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2 - 5, WIN_Y / 2),
+		point(WIN_X / 2 - 10, WIN_Y / 2), color(0, 255, 0));
+	draw_line(data, point(WIN_X / 2 + 5, WIN_Y / 2),
+		point(WIN_X / 2 + 10, WIN_Y / 2), color(0, 255, 0));
 	draw_point(data, WIN_X / 2, WIN_Y / 2, color(255, 0, 0));
 }

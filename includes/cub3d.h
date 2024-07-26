@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/26 02:50:44 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:11:38 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ typedef struct s_data
 	t_input			inputs;
 }					t_data;
 
+void				toggle_mouse(t_data *data);
 int					parse_file(t_data *data, char *file);
 
 void				calculate_img(t_data *data);
@@ -218,9 +219,16 @@ void				ft_turn_up(t_data *data);
 /* mlx.c */
 
 double				fix_angle(double angle);
-
+t_color				get_texture_color(int y, double height,
+						double angle, t_data *data);
 void				mlx_destroy(t_data *data);
 int					start_mlx(t_data *data);
 char				*texture_to_str(t_wall texture);
+
+void				draw_point(t_data *data, int x, int y, t_color color);
+void				draw_map_point(t_data *data, int x, int y, t_color color);
+int					toggle_map(t_data *data);
+double				fix_angle(double angle);
+int					ft_abs(int x);
 
 #endif
