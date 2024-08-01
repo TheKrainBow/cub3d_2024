@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:17 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/12 01:19:26 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:53:32 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	find_player(t_data *data)
 			}
 		}
 	}
+	if (data->parsing.has_player == 0)
+		return (line_error("EOF", "No player found in map"));
 	return (VALID);
 }
 

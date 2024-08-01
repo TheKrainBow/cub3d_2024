@@ -18,8 +18,8 @@ void	display_ray(int x, double angle, t_data *data)
 	int		height;
 	double	dist;
 
-	dist = data->ray->dist * cos(deg_to_rad(fix_angle(angle))
-			- deg_to_rad(fix_angle(data->player.rotation)));
+	dist = data->ray->dist;// * cos(deg_to_rad(fix_angle(angle))
+			//- deg_to_rad(fix_angle(data->player.rotation)));
 	height = WIN_Y / dist;
 	y = -1;
 	while (++y < WIN_Y)

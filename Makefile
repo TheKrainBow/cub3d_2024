@@ -21,7 +21,7 @@ INCLUDES		=	-Iincludes							\
 
 LD_FLAGS		=	-Llibft -Lmlx -lm -lbsd -lmlx -lXext -lX11 -lft -ltermcap -lreadline -O2
 
-NAME			=	cub3d
+NAME			=	cub3D
 OBJS			=	$(addprefix srcs/, $(ALL_SRCS:.c=.o))
 
 NB_OF_FILES	=	0
