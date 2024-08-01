@@ -18,8 +18,8 @@ void	display_ray(int x, double angle, t_data *data)
 	int		height;
 	double	dist;
 
-	dist = data->ray->dist;// * cos(deg_to_rad(fix_angle(angle))
-			//- deg_to_rad(fix_angle(data->player.rotation)));
+	dist = data->ray->dist * cos(deg_to_rad(fix_angle(angle))
+			- deg_to_rad(fix_angle(data->player.rotation)));
 	height = WIN_Y / dist;
 	y = -1;
 	while (++y < WIN_Y)
@@ -45,24 +45,24 @@ void	draw_point(t_data *data, int x, int y, t_color color)
 
 void	draw_map_point(t_data *data, int x, int y, t_color color)
 {
-	if (y < 0 || x < 0 || y >= (data->map_y * MAP_SCALE)
-		|| x >= (data->map_x * MAP_SCALE))
+	if (y < 0 || x < 0 || y >= (data->map_y * data->map_scale)
+		|| x >= (data->map_x * data->map_scale))
 		return ;
-	data->draw_map[(data->map_x * MAP_SCALE) * y + x] = color;
+	data->draw_map[(data->map_x * data->map_scale) * y + x] = color;
 }
 
 static void	draw_player_map(t_data *data)
 {
-	draw_map_point(data, data->player.pos_x * MAP_SCALE,
-		data->player.pos_y * MAP_SCALE, color(0, 0, 0));
-	draw_map_point(data, data->player.pos_x * MAP_SCALE - 1,
-		data->player.pos_y * MAP_SCALE, color(0, 0, 0));
-	draw_map_point(data, data->player.pos_x * MAP_SCALE + 1,
-		data->player.pos_y * MAP_SCALE, color(0, 0, 0));
-	draw_map_point(data, data->player.pos_x * MAP_SCALE,
-		data->player.pos_y * MAP_SCALE - 1, color(0, 0, 0));
-	draw_map_point(data, data->player.pos_x * MAP_SCALE,
-		data->player.pos_y * MAP_SCALE + 1, color(0, 0, 0));
+	draw_map_point(data, data->player.pos_x * data->map_scale,
+		data->player.pos_y * data->map_scale, color(0, 0, 0));
+	draw_map_point(data, data->player.pos_x * data->map_scale - 1,
+		data->player.pos_y * data->map_scale, color(0, 0, 0));
+	draw_map_point(data, data->player.pos_x * data->map_scale + 1,
+		data->player.pos_y * data->map_scale, color(0, 0, 0));
+	draw_map_point(data, data->player.pos_x * data->map_scale,
+		data->player.pos_y * data->map_scale - 1, color(0, 0, 0));
+	draw_map_point(data, data->player.pos_x * data->map_scale,
+		data->player.pos_y * data->map_scale + 1, color(0, 0, 0));
 }
 
 void	draw_map(t_data *data)
@@ -72,12 +72,12 @@ void	draw_map(t_data *data)
 	t_color	px;
 
 	y = -1;
-	while (++y < data->map_y * MAP_SCALE)
+	while (++y < data->map_y * data->map_scale)
 	{
 		x = -1;
-		while (++x < data->map_x * MAP_SCALE)
+		while (++x < data->map_x * data->map_scale)
 		{
-			if (data->map[y / MAP_SCALE][x / MAP_SCALE] == WALL)
+			if (data->map[y / data->map_scale][x / data->map_scale] == WALL)
 				px = color(255, 0, 0);
 			else
 				px = color(255, 255, 255);

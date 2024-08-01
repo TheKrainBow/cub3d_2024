@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:48:57 by dferjul           #+#    #+#             */
-/*   Updated: 2024/07/26 15:06:46 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:03:17 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	toggle_map(t_data *data)
 
 	if (!data->inputs.has_map)
 	{
-		data->win_map = mlx_new_window(data->mlx, data->map_x * MAP_SCALE,
-				data->map_y * MAP_SCALE, "Minimap");
-		data->img_map = mlx_new_image(data->mlx, data->map_x * MAP_SCALE,
-				data->map_y * MAP_SCALE);
+		data->win_map = mlx_new_window(data->mlx, data->map_x * data->map_scale,
+				data->map_y * data->map_scale, "Minimap");
+		data->img_map = mlx_new_image(data->mlx, data->map_x * data->map_scale,
+				data->map_y * data->map_scale);
 		data->draw_map = (t_color *)mlx_get_data_addr(data->img_map,
 				&t, &t, &t);
 		mlx_hook(data->win_map, 33, 1L << 17, toggle_map, data);

@@ -6,7 +6,7 @@
 /*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:15:48 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/29 18:49:26 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:16:07 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	check_closed_map(t_data *data)
 		{
 			if (data->map[j][i] == EMPTY)
 			{
-				if ((j == 0 || i == 0 || j == data->map_y - 1 || i == data->map_x - 1))
+				if ((j == 0 || i == 0 || j == data->map_y - 1
+						|| i == data->map_x - 1))
 					return (line_error(data->map[j], "Map not closed"));
 				if (ft_iswhitespace(data->map[j - 1][i])
 					|| ft_iswhitespace(data->map[j + 1][i])

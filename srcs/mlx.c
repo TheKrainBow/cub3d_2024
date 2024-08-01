@@ -6,7 +6,7 @@
 /*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 18:03:06 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/26 02:44:08 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:15:27 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ int	start_mlx(t_data *data)
 	mlx_hook(data->win, 6, 1L << 6, mouse_hook, data);
 	mlx_loop_hook(data->mlx, hook_loop, data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	mlx_get_screen_size(data->mlx, &data->win_max.x, &data->win_max.y);
+	data->map_scale = MAP_SCALE;
+	while (data->map_x * data->map_scale > data->win_max.x
+		|| data->map_y * data->map_scale + 100 > data->win_max.y)
+		data->map_scale--;
 	return (VALID);
 }
 

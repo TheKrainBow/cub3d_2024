@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/26 15:11:38 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:08:49 by dferjul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define WIN_Y 580
 //# define WIN_X 850
 //# define WIN_Y 480
-# define FOV 90
+# define FOV 60
 # define MAP_SCALE 15
 
 # define WRONG_TOKEN "Invalid token"
@@ -155,12 +155,14 @@ typedef struct s_input
 typedef struct s_data
 {
 	char			**map;
+	int				map_scale;
 	int				map_x;
 	int				map_y;
 	void			*mlx;
 	void			*win_map;
 	void			*img_map;
 	t_color			*draw_map;
+	t_point			win_max;
 	void			*win;
 	void			*img;
 	t_color			*draw;
