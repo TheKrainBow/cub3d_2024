@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:48:21 by maagosti          #+#    #+#             */
-/*   Updated: 2024/08/01 17:08:49 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/08/01 18:57:32 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ typedef struct s_data
 	void			*win_map;
 	void			*img_map;
 	t_color			*draw_map;
-	t_point			win_max;
 	void			*win;
 	void			*img;
 	t_color			*draw;

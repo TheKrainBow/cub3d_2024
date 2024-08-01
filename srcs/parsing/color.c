@@ -6,7 +6,7 @@
 /*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:27:23 by maagosti          #+#    #+#             */
-/*   Updated: 2024/07/12 01:24:11 by maagosti         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:44:47 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	parse_color(char *line, int *i, unsigned char *color)
 		(*i)++;
 	if (!ft_isdigit(line[*i]))
 		return (line_error(line, NOT_INT));
-	*color = ft_atoi(line + *i);
-	tmp_color = *color;
+	tmp_color = ft_atoi(line + *i);
+	*color = tmp_color;
 	if (tmp_color > 255)
 		return (line_error(line, NOT_INT));
 	while (ft_isdigit(line[*i]) || ft_iswhitespace(line[*i]))

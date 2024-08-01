@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dferjul <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: maagosti <maagosti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 18:03:06 by maagosti          #+#    #+#             */
-/*   Updated: 2024/08/01 17:15:27 by dferjul          ###   ########.fr       */
+/*   Updated: 2024/08/01 19:03:44 by maagosti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	hook_loop(t_data *data)
 int	open_texture(void *mlx, t_texture *texture, t_wall text)
 {
 	int		trash;
-	void	*tmp;
+	char	*tmp;
 
 	if (!texture->path)
 	{
@@ -50,13 +50,14 @@ int	open_texture(void *mlx, t_texture *texture, t_wall text)
 		ft_putendl_fd(texture_to_str(text), 2);
 		return (ERROR);
 	}
-	tmp = texture->path;
+	tmp = ft_strtrim(texture->path, " \f\t\n\r\v");
 	texture->ptr = mlx_xpm_file_to_image(mlx, tmp,
 			&texture->sizex, &texture->sizey);
+	free(tmp);
 	if (!texture->ptr)
 	{
-		ft_putstr_fd("Error while opening texture ", 2);
-		ft_putendl_fd(tmp, 2);
+		ft_putstr_fd("Error while opening texture '", 2);
+		ft_putendl_fd(texture->path, 2);
 		return (ERROR);
 	}
 	texture->draw = (t_color *)mlx_get_data_addr(texture->ptr,
@@ -95,10 +96,9 @@ int	start_mlx(t_data *data)
 	mlx_hook(data->win, 6, 1L << 6, mouse_hook, data);
 	mlx_loop_hook(data->mlx, hook_loop, data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	mlx_get_screen_size(data->mlx, &data->win_max.x, &data->win_max.y);
 	data->map_scale = MAP_SCALE;
-	while (data->map_x * data->map_scale > data->win_max.x
-		|| data->map_y * data->map_scale + 100 > data->win_max.y)
+	while (data->map_x * data->map_scale > 500
+		|| data->map_y * data->map_scale + 100 > 500)
 		data->map_scale--;
 	return (VALID);
 }
