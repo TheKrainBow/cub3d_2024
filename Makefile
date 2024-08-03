@@ -13,36 +13,19 @@ SRCS		=	main.c									\
 				raycasting/draw_utils.c					\
 				raycasting/raycasting.c					\
 
-SRCS_bonus		=	parsing/color_bonus.c						\
-					parsing/map_bonus.c							\
-					parsing/parsing_bonus.c						\
-					parsing/player_bonus.c						\
-					parsing/texture_bonus.c						\
-					player/input_bonus.c						\
-					player/move_bonus.c							\
-					player/turn_bonus.c							\
-					player/mouse_bonus.c						\
-					raycasting/draw_bonus.c						\
-					raycasting/draw_utils_bonus.c				\
-					raycasting/raycasting_bonus.c				\
-
 ALL_SRCS		=	$(SRCS)
 
 INCLUDES		=	-Iincludes							\
 					-Ilibft/includes					\
 					-Imlx
 
-OBJ_DIR			=	srcs/Objects
+OBJ_DIR			=	objs
 
 OBJS			=	$(addprefix $(OBJ_DIR)/, $(ALL_SRCS:.c=.o))
-
-# OBJS_BONUS 		=	$(addprefix $(OBJ_DIR)/, $(SRCS_BONUS:.c=.o))
 
 LD_FLAGS		=	-Llibft -Lmlx -lm -lbsd -lmlx -lXext -lX11 -lft -ltermcap -lreadline -O2
 
 NAME			=	Cub3D
-
-# NAME_B			=	Cub3D
 
 NB_OF_FILES	=	0
 FIRST_CALL	=	0
@@ -56,10 +39,6 @@ RM				=	@rm -f
 LIBFT			=	libft/libft.a
 
 FLAGS			=	-Wall -Werror -Wextra $(INCLUDES) -g -fsanitize=address
-
-# $(OBJ_DIR)/%_bonus.o: srcs/%_bonus.c
-# 	@mkdir -p $(@D)
-# 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: srcs/%.c
 				@mkdir -p $(@D)
@@ -86,9 +65,6 @@ $(OBJ_DIR)/%.o: srcs/%.c
 $(NAME):			$(LIBFT) init $(OBJS)
 					@$(CC) $(OBJS) $(FLAGS) -o $(NAME) $(LD_FLAGS)
 
-# $(Name_B): 			$(OBJS_bonus) $(LIBFT)
-# 					@$(CC) $(OBJS_bonus) $(FLAGS) -o $(Name_B) $(LD_FLAGS)
-
 init:
 				$(eval I=$(shell echo $$(find -name "*.o" | grep srcs | wc -l)))
 				$(eval NB_OF_FILES=$(shell echo $$(find -name "*.c" | grep srcs | wc -l)))
@@ -97,9 +73,6 @@ all:				$(NAME) norme
 
 $(LIBFT):
 					@make -s -C libft -f Makefile
-
-# bonus:				$(OBJS_bonus) $(LIBFT)
-# 					@$(CC) $(FLAGS) $(OBJS_bonus) -o $(Name_B) $(LD_FLAGS)
 
 clean:
 					@make -s -C libft -f Makefile clean
@@ -114,7 +87,7 @@ fclean:				clean
 re:					fclean all
 					@$(CC) $(OBJS) $(FLAGS) -o $(NAME) $(LD_FLAGS)
 
-# re_bonus:			fclean bonus
+bonus:			all
 
 norme:
 					@echo "\033[0;33mChecking \033[1;31mnorminette\033[0;33m\t\033[1;30m[\033[1;31m⌛\033[1;30m]\033[0m"
