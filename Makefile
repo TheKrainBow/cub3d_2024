@@ -38,7 +38,8 @@ RM				=	@rm -f
 
 LIBFT			=	libft/libft.a
 
-FLAGS			=	-Wall -Werror -Wextra $(INCLUDES) -g -fsanitize=address
+FLAGS			=	-Wall -Werror -Wextra $(INCLUDES) 
+#-g -fsanitize=address
 
 $(OBJ_DIR)/%.o: srcs/%.c
 				@mkdir -p $(@D)
